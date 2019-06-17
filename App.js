@@ -1,26 +1,28 @@
 import React from 'react'
+import { Text } from 'react-native'
 import StartScreen from './screens/StartScreen'
 import TrainingScreen from './screens/TrainingScreen'
 import ExamSettingsScreen from './screens/ExamSettingsScreen'
 import ExamScreen from './screens/ExamScreen'
-import { createSwitchNavigator, createAppContainer } from "react-navigation"
+import { createAppContainer, createDrawerNavigator } from "react-navigation"
 
-const AppContainer = createAppContainer(createSwitchNavigator(
+const AppContainer = createAppContainer(createDrawerNavigator(
   {
-    Start: {
-      screen: StartScreen
-    },
-    Training: TrainingScreen,
-    ExamSettings: ExamSettingsScreen,
-    Exam: ExamScreen
+    Start: { screen: StartScreen },
+    Training: { screen: TrainingScreen },
+    ExamSettings: { screen: ExamSettingsScreen },
+    Exam: { screen: ExamScreen }
   },
   {
-    initialRouteName: 'Start'
+    contentComponent: () => (
+      <Text>ffdf</Text>
+    ),
+    initialRouteName: 'Training'
   }
 ))
 
 export default class App extends React.Component {
   render() {
-    return <AppContainer />;
+    return <AppContainer />
   }
 }

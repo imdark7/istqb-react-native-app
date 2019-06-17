@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native'
 
-class StartScreen extends React.Component {
+export default class StartScreen extends React.Component {
     static navigationOptions = {
       header: null
     }
@@ -64,5 +64,3 @@ const styles = StyleSheet.create({
       color: '#fefefe',
     },
 })
-
-export default StartScreen

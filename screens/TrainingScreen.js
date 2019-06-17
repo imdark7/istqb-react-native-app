@@ -1,7 +1,10 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TextInput } from 'react-native'
 import Question from '../components/Question'
 import Answers from '../components/Answers';
+import QuestionNumber from '../components/QuestionNumber';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Appbar } from 'react-native-paper';
 
 export default class TrainingScreen extends React.Component {
     static navigationOptions = {
@@ -11,74 +14,68 @@ export default class TrainingScreen extends React.Component {
     getQuestionInfo = () => {
         return {
             question: {
-                text: "Q12. Ответ на главный вопрос жизни вселенной и всего такого?"
+                id: 12,
+                text: "Ответ на главный вопрос жизни вселенной и всего такого?"
             },
             answers: [
                 {
-                    text: "Бугульма",
+                    id: 1,
+                    text: "Повысить безопасность системы",
                     isCorrect: false
                 },
                 {
-                    text: "42",
+                    id: 2,
+                    text: "Предотвратить бесконечные циклы в коде",
                     isCorrect: false
                 },
                 {
-                    text: "Ответ на главный вопрос жизни вселенной и всего такого шмаково",
+                    id: 3,
+                    text: "Использовать как альтернативу или план Б",
                     isCorrect: false
                 },
                 {
-                    text: "Коська!!",
-                    isCorrect: false
-                },
-                {
-                    text: "Мур",
-                    isCorrect: false
+                    id: 4,
+                    text: "Определить, когда завершить тестирование",
+                    isCorrect: true
                 }
             ]
         }
     }
 
     render() {
-        var info = {
-            question: {
-                text: "Q12. Ответ на главный вопрос жизни вселенной и всего такого?"
-            },
-            answers: [
-                {
-                    text: "Бугульма",
-                    isCorrect: false
-                },
-                {
-                    text: "42",
-                    isCorrect: false
-                },
-                {
-                    text: "Ответ на главный вопрос жизни вселенной и всего такого шмаково",
-                    isCorrect: false
-                },
-                {
-                    text: "Коська!!",
-                    isCorrect: false
-                },
-                {
-                    text: "Мур",
-                    isCorrect: false
-                }
-            ]
-        };
+        var info = this.getQuestionInfo();
         return (
-            <View>
-                <Text style={styles.header}>Тренировка</Text>
-                <Question text={info.question.text} />
-                <Answers data={info.answers} />
+            <View style={{flex: 1}}>
+                <View>
+                    <Appbar.Header style={styles.appbar}>
+                        <Appbar.Action icon='dehaze' onPress={() => this.props.navigation.openDrawer()} />
+                        <Appbar.Content title="Foundation" />
+                        <QuestionNumber number='1222' />
+                    </Appbar.Header>
+                </View>
+                <ScrollView style={styles.questionContainer}>
+                    <Question id={info.question.id} text={info.question.text} />
+                </ScrollView>
+                <View style={styles.answerContainer}>
+                    <Answers data={info.answers} />
+                </View>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    header: {
-        fontSize: 40,
-        color: '#222',
+    appbar:{
+        backgroundColor: '#479979'
     },
+    questionNumber:{
+        color: '#fff',
+        margin: 5
+        
+    },
+    questionContainer:{
+        margin: 20,
+    },
+    answerContainer:{
+    }
 })

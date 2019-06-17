@@ -1,17 +1,24 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types';
 
 export default class Question extends React.Component {
+    static propTypes = {
+        id: PropTypes.number,
+        text: PropTypes.string
+    }
     
     render() {
         return (
             <View>
-                <Text>{this.props.text}</Text>
+                <Text style={styles.questionText}>{this.props.text}</Text>
             </View>
         )
     }
 }
-Question.propTypes = {
-    text: PropTypes.string.isRequired
-}
+
+const styles = StyleSheet.create({
+    questionText: {
+        textAlign: 'center'
+    }
+})
