@@ -5,6 +5,7 @@ import Answers from '../components/Answers';
 import QuestionNumber from '../components/QuestionNumber';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Appbar } from 'react-native-paper';
+import InfoBar from '../components/InfoBar';
 
 export default class TrainingScreen extends React.Component {
     static navigationOptions = {
@@ -14,8 +15,9 @@ export default class TrainingScreen extends React.Component {
     getQuestionInfo = () => {
         return {
             question: {
-                id: 12,
-                text: "Ответ на главный вопрос жизни вселенной и всего такого?"
+                id: 1002,
+                text: "Ответ на главный вопрос жизни вселенной и всего такого?",
+                heading: "Foundations"
             },
             answers: [
                 {
@@ -42,17 +44,18 @@ export default class TrainingScreen extends React.Component {
         }
     }
 
+    state = { questionData: this.getQuestionInfo() }
+
+    getHeaderComponents() {
+        return [(<Appbar.Content key="title" title={this.state.questionData.question.heading} />),
+                (<QuestionNumber key="questionNumber" style={styles.questionNumber} number={this.state.questionData.question.id.toString()} />)]
+    }
+
     render() {
         var info = this.getQuestionInfo();
         return (
             <View style={{flex: 1}}>
-                <View>
-                    <Appbar.Header style={styles.appbar}>
-                        <Appbar.Action icon='dehaze' onPress={() => this.props.navigation.openDrawer()} />
-                        <Appbar.Content title="Foundation" />
-                        <QuestionNumber number='1222' />
-                    </Appbar.Header>
-                </View>
+                <InfoBar navigation={this.props.navigation} components={this.getHeaderComponents()} />
                 <ScrollView style={styles.questionContainer}>
                     <Question id={info.question.id} text={info.question.text} />
                 </ScrollView>
@@ -65,13 +68,9 @@ export default class TrainingScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    appbar:{
-        backgroundColor: '#479979'
-    },
     questionNumber:{
         color: '#fff',
         margin: 5
-        
     },
     questionContainer:{
         margin: 20,
