@@ -6,6 +6,7 @@ import QuestionNumber from '../components/QuestionNumber';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Appbar } from 'react-native-paper';
 import InfoBar from '../components/InfoBar';
+import SideMenu from 'react-native-side-menu';
 
 export default class TrainingScreen extends React.Component {
     static navigationOptions = {
@@ -46,6 +47,10 @@ export default class TrainingScreen extends React.Component {
 
     state = { questionData: this.getQuestionInfo() }
 
+    getSideMenu() {
+        return <Text>Привет</Text>
+    }
+
     getHeaderComponents() {
         return [(<Appbar.Content key="title" title={this.state.questionData.question.heading} />),
                 (<QuestionNumber key="questionNumber" style={styles.questionNumber} number={this.state.questionData.question.id.toString()} />)]
@@ -55,13 +60,16 @@ export default class TrainingScreen extends React.Component {
         var info = this.getQuestionInfo();
         return (
             <View style={{flex: 1}}>
-                <InfoBar navigation={this.props.navigation} components={this.getHeaderComponents()} />
-                <ScrollView style={styles.questionContainer}>
-                    <Question id={info.question.id} text={info.question.text} />
-                </ScrollView>
-                <View style={styles.answerContainer}>
-                    <Answers data={info.answers} />
-                </View>
+                <SideMenu menu={this.getSideMenu()} style={{flex: 1}}>
+                <InfoBar toggleSideMenu={this.props.screenProps.toggleSideMenu} navigation={this.props.navigation} components={this.getHeaderComponents()} />
+                
+                    <ScrollView style={styles.questionContainer}>
+                        <Question id={info.question.id} text={info.question.text} />
+                    </ScrollView>
+                    <View style={styles.answerContainer}>
+                        <Answers data={info.answers} />
+                    </View>
+                </SideMenu>
             </View>
         )
     }

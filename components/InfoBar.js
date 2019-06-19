@@ -12,7 +12,7 @@ export default class InfoBar extends React.Component {
     render() {
         return (
             <Appbar.Header style={styles.appbar}>
-                <Appbar.Action icon='dehaze' onPress={() => this.props.navigation.openDrawer()} />
+                <Appbar.Action icon='dehaze' onPress={() => this.props.toggleSideMenu()} />
                 {this.props.components}
             </Appbar.Header>
         )
