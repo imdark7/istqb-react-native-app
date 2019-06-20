@@ -6,11 +6,12 @@ import QuestionNumber from '../components/QuestionNumber';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Appbar } from 'react-native-paper';
 import InfoBar from '../components/InfoBar';
-import SideMenu from 'react-native-side-menu';
+import Drawer from 'react-native-drawer'
+import Overlay from '../components/Overlay';
 
 export default class TrainingScreen extends React.Component {
     static navigationOptions = {
-      header: null
+      header: null,
     }
 
     getQuestionInfo = () => {
@@ -45,10 +46,18 @@ export default class TrainingScreen extends React.Component {
         }
     }
 
-    state = { questionData: this.getQuestionInfo() }
+    state = { 
+        questionData: this.getQuestionInfo(),
+        sideMenuIsOpen: false
+    }
+
+    toggleSideMenu = () => {
+        console.log("hello")
+        this.setState({sideMenuIsOpen: !this.state.sideMenuIsOpen})
+    }
 
     getSideMenu() {
-        return <Text>Привет</Text>
+        return <View style={{width: '80%', height: '100%'}}><Text>Привет</Text></View>
     }
 
     getHeaderComponents() {
@@ -60,16 +69,23 @@ export default class TrainingScreen extends React.Component {
         var info = this.getQuestionInfo();
         return (
             <View style={{flex: 1}}>
-                <SideMenu menu={this.getSideMenu()} style={{flex: 1}}>
-                <InfoBar toggleSideMenu={this.props.screenProps.toggleSideMenu} navigation={this.props.navigation} components={this.getHeaderComponents()} />
-                
+                <InfoBar toggleSideMenu={this.toggleSideMenu} navigation={this.props.navigation} components={this.getHeaderComponents()} />
+                <Drawer
+                    content={this.getSideMenu()}
+                    open={this.state.sideMenuIsOpen}
+                    type="overlay"
+                    panCloseMask={0.2}
+                    openDrawerOffset={0.2}
+                    styles={{drawer: { backgroundColor: 'lightgreen', height: '100%', padding: 20 }}}
+                >
+                    <Overlay />
                     <ScrollView style={styles.questionContainer}>
                         <Question id={info.question.id} text={info.question.text} />
                     </ScrollView>
                     <View style={styles.answerContainer}>
                         <Answers data={info.answers} />
                     </View>
-                </SideMenu>
+                </Drawer>
             </View>
         )
     }

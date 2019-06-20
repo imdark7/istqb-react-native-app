@@ -25,17 +25,7 @@ export default class App extends React.Component {
     sideMenuComponents: null
   }
 
-  toggleSideMenu = () => {
-    this.setState({sideMenuIsOpen: !this.state.sideMenuIsOpen})
-  }
-
-  updateSideMenuComponents = (menu) => {
-    if (this.state.sideMenuComponents !== menu) {
-      this.setState({sideMenuComponents: menu})
-    }
-  }
-
   render() {
-    return <AppContainer screenProps={{updateSideMenuComponents: this.updateSideMenuComponents, toggleSideMenu: this.toggleSideMenu}} />
+    return <AppContainer />
   }
 }
