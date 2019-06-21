@@ -51,9 +51,16 @@ export default class TrainingScreen extends React.Component {
         sideMenuIsOpen: false
     }
 
-    toggleSideMenu = () => {
-        console.log("hello")
-        this.setState({sideMenuIsOpen: !this.state.sideMenuIsOpen})
+    toggleSideMenu = (state) => {
+        if (state != undefined) {
+            if (state == this.state.sideMenuIsOpen){
+                return;
+            }
+            this.setState({sideMenuIsOpen: state})
+        }
+        else {
+            this.setState({sideMenuIsOpen: !this.state.sideMenuIsOpen})
+        }
     }
 
     getSideMenu() {
@@ -77,8 +84,10 @@ export default class TrainingScreen extends React.Component {
                     panCloseMask={0.2}
                     openDrawerOffset={0.2}
                     styles={{drawer: { backgroundColor: 'lightgreen', height: '100%', padding: 20 }}}
+                    onCloseStart={() => this.toggleSideMenu(false)}
+                    onOpenStart={() => this.toggleSideMenu(true)}
                 >
-                    <Overlay />
+                    <Overlay fadeIn={this.state.sideMenuIsOpen} />
                     <ScrollView style={styles.questionContainer}>
                         <Question id={info.question.id} text={info.question.text} />
                     </ScrollView>

@@ -4,40 +4,44 @@ import PropTypes from 'prop-types';
 
 export default class Overlay extends React.Component {
     static propTypes = {
-        id: PropTypes.number,
-        text: PropTypes.string
+        fadeIn: PropTypes.bool
     }
 
     state = {
         opacity: new Animated.Value(0),
+        zIndex: -1,
     }
 
-    fadeIn = () => {
+    fade = (opacity) => {
         Animated.timing(this.state.opacity, {
-            toValue: 0.8,
-            duration: 5000,
-            //useNativeDriver: true
-        }).start()
-        console.log('fade in')
-    }
-
-    fadeOut = () => {
-        Animated.timing(this.state.opacity, {
-            toValue: 0,
-            duration: 500,
+            toValue: opacity,
+            duration: 300,
             useNativeDriver: true
         }).start()
     }
 
-    componentDidMount() {
-        this.fadeIn()
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.fadeIn){
+            this.setState({zIndex: 3})
+        }
+        this.fade(nextProps.fadeIn ? 0.8 : 0)
+        if (!nextProps.fadeIn){
+            setTimeout(() => this.setState({zIndex: -1}), 300)
+        }
     }
     
     render() {
         return (
-            <Animated.View style={{ backgroundColor: '#000', width: '100%', height: '100%', opacity: this.state.opacity }} >
-
-            </Animated.View>
+            <Animated.View style={[styles.overlay, {opacity: this.state.opacity, zIndex: this.state.zIndex}]} />
         )
     }
 }
+
+const styles = StyleSheet.create({
+    overlay: {
+        backgroundColor: '#000',
+        width: '100%',
+        height: '100%',
+        position: 'absolute'
+    },
+})
