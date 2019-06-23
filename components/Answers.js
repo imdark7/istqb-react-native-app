@@ -13,14 +13,28 @@ export default class Answers extends React.Component {
             })
         ).isRequired
     }
+
+    state = {
+        enabled: 'auto',
+        showAnswer: false
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.showAnswer
+    }
+
+    checkAnswer = () => {
+        this.setState({ showAnswer: true })
+    }
     
     answerButtonsArr = () => this.props.data.map(answer => (
-        <Answer key={answer.id} text={answer.text} />
+        <Answer key={answer.id} text={answer.text} clickHandler={this.checkAnswer} showAnswer={this.state.showAnswer} isCorrect={answer.isCorrect} />
     ))
     
     render() {
+        console.log('render all answers')
         return (
-            <View style={styles.answers}>
+            <View pointerEvents={this.state.enabled}>
                 {this.answerButtonsArr()}
             </View>
         )

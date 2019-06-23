@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, ScrollView, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types';
 
 export default class Question extends React.Component {
@@ -7,12 +7,17 @@ export default class Question extends React.Component {
         id: PropTypes.number,
         text: PropTypes.string
     }
+
+    shouldComponentUpdate(nextProps) {
+        return nextProps.id != this.props.id
+    }
     
     render() {
+        console.log('render Question')
         return (
-            <View>
+            <ScrollView style={{margin: 20}}>
                 <Text style={styles.questionText}>{this.props.text}</Text>
-            </View>
+            </ScrollView>
         )
     }
 }

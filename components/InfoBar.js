@@ -10,6 +10,7 @@ export default class InfoBar extends React.Component {
     }
     
     render() {
+        console.log('render InfoBar')
         return (
             <Appbar.Header style={styles.appbar}>
                 <Appbar.Action icon='dehaze' onPress={() => this.props.toggleSideMenu()} />

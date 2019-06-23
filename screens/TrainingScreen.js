@@ -1,10 +1,10 @@
 import React from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
 import Question from '../components/Question'
 import Answers from '../components/Answers';
 import QuestionNumber from '../components/QuestionNumber';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Appbar } from 'react-native-paper';
+import { Appbar, Switch, Divider } from 'react-native-paper';
 import InfoBar from '../components/InfoBar';
 import Drawer from 'react-native-drawer'
 import Overlay from '../components/Overlay';
@@ -48,7 +48,8 @@ export default class TrainingScreen extends React.Component {
 
     state = { 
         questionData: this.getQuestionInfo(),
-        sideMenuIsOpen: false
+        sideMenuIsOpen: false,
+        isSwitchOn: false
     }
 
     toggleSideMenu = (state) => {
@@ -64,7 +65,12 @@ export default class TrainingScreen extends React.Component {
     }
 
     getSideMenu() {
-        return <View style={{width: '80%', height: '100%'}}><Text>Привет</Text></View>
+        const { isSwitchOn } = this.state;
+        return  <View style={{width: '80%', height: '100%'}}>
+                    <Switch value={isSwitchOn} onValueChange={() =>{ this.setState({ isSwitchOn: !isSwitchOn }); }} />
+                    <Divider style={styles.divider} />
+                    <Button onPress={() => this.props.navigation.navigate('ExamSettings')} title='Экзамен' />
+                </View>
     }
 
     getHeaderComponents() {
@@ -74,6 +80,7 @@ export default class TrainingScreen extends React.Component {
 
     render() {
         var info = this.getQuestionInfo();
+        console.log('render screen')
         return (
             <View style={{flex: 1}}>
                 <InfoBar toggleSideMenu={this.toggleSideMenu} navigation={this.props.navigation} components={this.getHeaderComponents()} />
@@ -83,17 +90,13 @@ export default class TrainingScreen extends React.Component {
                     type="overlay"
                     panCloseMask={0.2}
                     openDrawerOffset={0.2}
-                    styles={{drawer: { backgroundColor: 'lightgreen', height: '100%', padding: 20 }}}
+                    styles={{drawer: { backgroundColor: 'white', height: '100%', padding: 20 }}}
                     onCloseStart={() => this.toggleSideMenu(false)}
                     onOpenStart={() => this.toggleSideMenu(true)}
                 >
                     <Overlay fadeIn={this.state.sideMenuIsOpen} />
-                    <ScrollView style={styles.questionContainer}>
-                        <Question id={info.question.id} text={info.question.text} />
-                    </ScrollView>
-                    <View style={styles.answerContainer}>
-                        <Answers data={info.answers} />
-                    </View>
+                    <Question id={info.question.id} text={info.question.text} />
+                    <Answers data={info.answers} />
                 </Drawer>
             </View>
         )
@@ -105,9 +108,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         margin: 5
     },
-    questionContainer:{
-        margin: 20,
-    },
-    answerContainer:{
+    divider: {
+        margin: 5,
     }
 })

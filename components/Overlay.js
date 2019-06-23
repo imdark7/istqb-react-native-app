@@ -12,10 +12,15 @@ export default class Overlay extends React.Component {
         zIndex: -1,
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log(nextProps.fadeIn,this.props.fadeIn, 'shouldUpdate overlay', nextState.zIndex, this.state.zIndex)
+        return (nextProps.fadeIn != this.props.fadeIn) || (nextState.zIndex != this.state.zIndex)
+    }
+
     fade = (opacity) => {
         Animated.timing(this.state.opacity, {
             toValue: opacity,
-            duration: 300,
+            duration: 250,
             useNativeDriver: true
         }).start()
     }
@@ -26,11 +31,12 @@ export default class Overlay extends React.Component {
         }
         this.fade(nextProps.fadeIn ? 0.8 : 0)
         if (!nextProps.fadeIn){
-            setTimeout(() => this.setState({zIndex: -1}), 300)
+            setTimeout(() => this.setState({zIndex: -1}), 250)
         }
     }
     
     render() {
+        console.log('render overlay')
         return (
             <Animated.View style={[styles.overlay, {opacity: this.state.opacity, zIndex: this.state.zIndex}]} />
         )

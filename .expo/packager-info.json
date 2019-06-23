@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 10587,
+  "expoServerNgrokUrl": "https://4w-8ac.anonymous.istqbtrainerempty.exp.direct",
+  "packagerNgrokUrl": "https://packager.4w-8ac.anonymous.istqbtrainerempty.exp.direct",
+  "ngrokPid": 10611
 }
