@@ -1,8 +1,8 @@
-import React from 'react'
-import { View, StyleSheet, Animated } from 'react-native'
+import React, { Component } from 'react'
+import { StyleSheet, Animated } from 'react-native'
 import PropTypes from 'prop-types';
 
-export default class Overlay extends React.Component {
+export default class Overlay extends Component {
     static propTypes = {
         fadeIn: PropTypes.bool
     }
@@ -13,7 +13,6 @@ export default class Overlay extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log(nextProps.fadeIn,this.props.fadeIn, 'shouldUpdate overlay', nextState.zIndex, this.state.zIndex)
         return (nextProps.fadeIn != this.props.fadeIn) || (nextState.zIndex != this.state.zIndex)
     }
 
@@ -36,7 +35,6 @@ export default class Overlay extends React.Component {
     }
     
     render() {
-        console.log('render overlay')
         return (
             <Animated.View style={[styles.overlay, {opacity: this.state.opacity, zIndex: this.state.zIndex}]} />
         )

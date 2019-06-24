@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types';
 import Answer from './Answer'
 
-export default class Answers extends React.Component {
+export default class Answers extends Component {
     static propTypes = {
         data: PropTypes.arrayOf(
             PropTypes.shape({
@@ -32,7 +32,6 @@ export default class Answers extends React.Component {
     ))
     
     render() {
-        console.log('render all answers')
         return (
             <View pointerEvents={this.state.enabled}>
                 {this.answerButtonsArr()}

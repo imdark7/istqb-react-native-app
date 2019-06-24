@@ -30,15 +30,13 @@ export default class Answer extends Component {
         this.setState({backgroundColor: this.props.isCorrect ? this.correct : this.incorrect})
     }
 
-
-
     render() {
-        console.log('render answers')
         return (
             <View>
                 <TouchableOpacity
                     onPress={() => {this.checkAnswer()}}
-                    style={{ backgroundColor: this.state.backgroundColor, ...styles.answer}}>
+                    style={{ backgroundColor: this.state.backgroundColor, ...styles.answer}}
+                >
                     <Text style={styles.answerText}>{this.props.text}</Text>
                 </TouchableOpacity>
             </View>
@@ -59,10 +57,10 @@ styles = StyleSheet.create({
         justifyContent: 'center',
     },
     answerText: {
-    fontSize: 17,
-    marginLeft: 10,
-    marginRight: 10,
-    textAlign: 'center',
-    color: '#111',
+        fontSize: 17,
+        marginLeft: 10,
+        marginRight: 10,
+        textAlign: 'center',
+        color: '#111',
     },
 })

@@ -1,15 +1,14 @@
-import React from 'react'
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
+import React, { Component } from 'react'
+import { View, StyleSheet, Button } from 'react-native'
 import Question from '../components/Question'
 import Answers from '../components/Answers';
 import QuestionNumber from '../components/QuestionNumber';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Appbar, Switch, Divider } from 'react-native-paper';
 import InfoBar from '../components/InfoBar';
 import Drawer from 'react-native-drawer'
 import Overlay from '../components/Overlay';
 
-export default class TrainingScreen extends React.Component {
+export default class TrainingScreen extends Component {
     static navigationOptions = {
       header: null,
     }
