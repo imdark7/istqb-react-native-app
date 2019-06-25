@@ -8,7 +8,8 @@ export default class Question extends Component {
         text: PropTypes.string
     }
 
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log(nextProps.id)
         return nextProps.id != this.props.id
     }
     

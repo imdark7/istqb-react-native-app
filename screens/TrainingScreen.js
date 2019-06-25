@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Button } from 'react-native'
+import { View, StyleSheet, Button, Text } from 'react-native'
 import Question from '../components/Question'
 import Answers from '../components/Answers';
 import QuestionNumber from '../components/QuestionNumber';
@@ -45,6 +45,38 @@ export default class TrainingScreen extends Component {
         }
     }
 
+    getNextQuestionInfo = () => {
+        return {
+            question: {
+                id: 1003,
+                text: "Чекаво сучары?",
+                heading: "Foundations"
+            },
+            answers: [
+                {
+                    id: 5,
+                    text: "кек",
+                    isCorrect: true
+                },
+                {
+                    id: 6,
+                    text: "лол",
+                    isCorrect: false
+                },
+                {
+                    id: 7,
+                    text: "арбидол",
+                    isCorrect: false
+                },
+                {
+                    id: 8,
+                    text: "чебурек",
+                    isCorrect: false
+                }
+            ]
+        }
+    }
+
     state = { 
         questionData: this.getQuestionInfo(),
         sideMenuIsOpen: false,
@@ -63,6 +95,10 @@ export default class TrainingScreen extends Component {
         }
     }
 
+    nextButtonHandler = () => {
+        this.setState({questionData: this.getNextQuestionInfo()})
+    }
+
     getSideMenu() {
         const { isSwitchOn } = this.state;
         return  <View style={{width: '80%', height: '100%'}}>
@@ -78,8 +114,7 @@ export default class TrainingScreen extends Component {
     }
 
     render() {
-        var info = this.getQuestionInfo();
-        console.log('render screen')
+        var info = this.state.questionData
         return (
             <View style={{flex: 1}}>
                 <InfoBar toggleSideMenu={this.toggleSideMenu} navigation={this.props.navigation} components={this.getHeaderComponents()} />
@@ -95,7 +130,7 @@ export default class TrainingScreen extends Component {
                 >
                     <Overlay fadeIn={this.state.sideMenuIsOpen} />
                     <Question id={info.question.id} text={info.question.text} />
-                    <Answers data={info.answers} />
+                    <Answers data={info.answers} nextButtonHandler={this.nextButtonHandler} />
                 </Drawer>
             </View>
         )
@@ -103,7 +138,7 @@ export default class TrainingScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    questionNumber:{
+    questionNumber: {
         color: '#fff',
         margin: 5
     },

@@ -36,7 +36,7 @@ export default class Overlay extends Component {
     
     render() {
         return (
-            <Animated.View style={[styles.overlay, {opacity: this.state.opacity, zIndex: this.state.zIndex}]} />
+            <Animated.View style={{opacity: this.state.opacity, zIndex: this.state.zIndex, ...styles.overlay}} />
         )
     }
 }

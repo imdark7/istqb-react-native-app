@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Answer extends Component {
     correct = '#3EC28F'
     incorrect = '#FF8981'
+    white = '#FFF'
 
     state = {
-        backgroundColor: '#fff'
+        backgroundColor: this.white,
+        selected: false
     }
 
     static propTypes = {
@@ -18,28 +20,38 @@ export default class Answer extends Component {
     }
 
     componentWillReceiveProps(props) {
-        if (props.showAnswer && props.isCorrect) {
-            this.setState({backgroundColor: this.correct})
+        if (!props.showAnswer) {
+            this.setState({selected: false})
         }
+        this.setState({backgroundColor: this.getBackgroundColor(props)})
+    }
+
+    getBackgroundColor(props) {
+        if (props.showAnswer) {
+            if (!props.isCorrect && this.state.selected){
+                return this.incorrect
+            }
+            if (props.isCorrect) {
+                return this.correct
+            }
+        }        
+        return this.white
     }
 
     checkAnswer = () => {
-        if (!this.props.isCorrect) { 
-            setTimeout(this.props.clickHandler, 40)
-        }
-        this.setState({backgroundColor: this.props.isCorrect ? this.correct : this.incorrect})
+        setTimeout(this.props.clickHandler, 40)
+        this.setState({selected: true})
+        this.setState({backgroundColor: this.getBackgroundColor(this.props)})
     }
 
     render() {
         return (
-            <View>
-                <TouchableOpacity
-                    onPress={() => {this.checkAnswer()}}
-                    style={{ backgroundColor: this.state.backgroundColor, ...styles.answer}}
-                >
-                    <Text style={styles.answerText}>{this.props.text}</Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+                onPress={() => {this.checkAnswer()}}
+                style={{ backgroundColor: this.state.backgroundColor, ...styles.answer}}
+            >
+                <Text style={styles.answerText}>{this.props.text}</Text>
+            </TouchableOpacity>
         )
     }
 }
