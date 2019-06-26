@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Button, Text } from 'react-native'
+import { View, StyleSheet, Button } from 'react-native'
 import Question from '../components/Question'
 import Answers from '../components/Answers';
 import QuestionNumber from '../components/QuestionNumber';
 import { Appbar, Switch, Divider } from 'react-native-paper';
 import InfoBar from '../components/InfoBar';
-import Drawer from 'react-native-drawer'
-import Overlay from '../components/Overlay';
+import SideMenu from '../components/SideMenu';
 
 export default class TrainingScreen extends Component {
     static navigationOptions = {
@@ -118,20 +117,14 @@ export default class TrainingScreen extends Component {
         return (
             <View style={{flex: 1}}>
                 <InfoBar toggleSideMenu={this.toggleSideMenu} navigation={this.props.navigation} components={this.getHeaderComponents()} />
-                <Drawer
-                    content={this.getSideMenu()}
-                    open={this.state.sideMenuIsOpen}
-                    type="overlay"
-                    panCloseMask={0.2}
-                    openDrawerOffset={0.2}
-                    styles={{drawer: { backgroundColor: 'white', height: '100%', padding: 20 }}}
-                    onCloseStart={() => this.toggleSideMenu(false)}
-                    onOpenStart={() => this.toggleSideMenu(true)}
+                <SideMenu 
+                    sideMenuContent={this.getSideMenu()}
+                    isOpen={this.state.sideMenuIsOpen}
+                    toggleSideMenuHandler={this.toggleSideMenu}
                 >
-                    <Overlay fadeIn={this.state.sideMenuIsOpen} />
                     <Question id={info.question.id} text={info.question.text} />
                     <Answers data={info.answers} nextButtonHandler={this.nextButtonHandler} />
-                </Drawer>
+                </SideMenu>
             </View>
         )
     }

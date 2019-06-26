@@ -9,7 +9,6 @@ export default class Question extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        console.log(nextProps.id)
         return nextProps.id != this.props.id
     }
     
