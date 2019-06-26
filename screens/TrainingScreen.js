@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Button } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import Question from '../components/Question'
 import Answers from '../components/Answers';
 import QuestionNumber from '../components/QuestionNumber';
 import { Appbar, Switch, Divider } from 'react-native-paper';
 import InfoBar from '../components/InfoBar';
 import SideMenu from '../components/SideMenu';
+import Button from '../components/Button';
 
 export default class TrainingScreen extends Component {
     static navigationOptions = {
@@ -100,10 +101,11 @@ export default class TrainingScreen extends Component {
 
     getSideMenu() {
         const { isSwitchOn } = this.state;
-        return  <View style={{width: '80%', height: '100%'}}>
+        return  <View>
+                    <Button text='Русский язык' />
                     <Switch value={isSwitchOn} onValueChange={() =>{ this.setState({ isSwitchOn: !isSwitchOn }); }} />
                     <Divider style={styles.divider} />
-                    <Button onPress={() => this.props.navigation.navigate('ExamSettings')} title='Экзамен' />
+                    <Button onPress={() => this.props.navigation.navigate('ExamSettings')} text='Экзамен' />
                 </View>
     }
 
