@@ -7,6 +7,8 @@ import { Appbar, Switch, Divider } from 'react-native-paper';
 import InfoBar from '../components/InfoBar';
 import SideMenu from '../components/SideMenu';
 import Button from '../components/Button';
+import store from '../redux/store';
+import {setLanguage, setTheme, setOrder} from '../redux/actions/trainingSettings'
 
 export default class TrainingScreen extends Component {
     static navigationOptions = {
@@ -101,8 +103,17 @@ export default class TrainingScreen extends Component {
 
     getSideMenu() {
         const { isSwitchOn } = this.state;
+        const languageSwitch = _ => {
+            let lng = store.getState().language === 'ru' ? 'en' : 'ru'
+            store.dispatch(setLanguage(lng));
+            console.log(store.getState().language)
+        }
+
+        //пока не работает
+        const txt = store.getState().language === 'ru'? 'Русский': 'Английский';
+
         return  <View>
-                    <Button text='Русский язык' />
+                    <Button text={txt} onPress={() => languageSwitch('en')} />
                     <Switch value={isSwitchOn} onValueChange={() =>{ this.setState({ isSwitchOn: !isSwitchOn }); }} />
                     <Divider style={styles.divider} />
                     <Button onPress={() => this.props.navigation.navigate('ExamSettings')} text='Экзамен' />

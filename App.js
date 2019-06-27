@@ -4,6 +4,8 @@ import TrainingScreen from './screens/TrainingScreen'
 import ExamSettingsScreen from './screens/ExamSettingsScreen'
 import ExamScreen from './screens/ExamScreen'
 import { createAppContainer, createSwitchNavigator } from "react-navigation"
+import { Provider } from 'react-redux'
+import store from './redux/store'
 
 const AppContainer = createAppContainer(createSwitchNavigator(
   {
@@ -24,6 +26,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <AppContainer />
+    return  <Provider store={store}>
+              <AppContainer />
+            </Provider>
   }
 }
