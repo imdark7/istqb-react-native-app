@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
+import { connect } from 'react-redux'
 import Question from '../components/Question'
 import Answers from '../components/Answers';
 import QuestionNumber from '../components/QuestionNumber';
@@ -8,9 +9,10 @@ import InfoBar from '../components/InfoBar';
 import SideMenu from '../components/SideMenu';
 import Button from '../components/Button';
 import store from '../redux/store';
+import Language from '../const/Language'
 import {setLanguage, setTheme, setOrder} from '../redux/actions/trainingSettings'
 
-export default class TrainingScreen extends Component {
+class TrainingScreen extends Component {
     static navigationOptions = {
       header: null,
     }
@@ -82,7 +84,12 @@ export default class TrainingScreen extends Component {
     state = { 
         questionData: this.getQuestionInfo(),
         sideMenuIsOpen: false,
-        isSwitchOn: false
+        isSwitchOn: false,
+        language: Language.RU
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({language: props.language})
     }
 
     toggleSideMenu = (state) => {
@@ -101,19 +108,19 @@ export default class TrainingScreen extends Component {
         this.setState({questionData: this.getNextQuestionInfo()})
     }
 
+
+    switchLanguage = _ => {
+        let lng = store.getState().language === Language.RU ? Language.EN : Language.RU
+        setLanguage(lng);
+        console.log(store.getState().language)
+    }
+
     getSideMenu() {
         const { isSwitchOn } = this.state;
-        const languageSwitch = _ => {
-            let lng = store.getState().language === 'ru' ? 'en' : 'ru'
-            store.dispatch(setLanguage(lng));
-            console.log(store.getState().language)
-        }
-
-        //пока не работает
-        const txt = store.getState().language === 'ru'? 'Русский': 'Английский';
+        const txt = this.state.language === Language.RU ? 'Русский': 'Английский';
 
         return  <View>
-                    <Button text={txt} onPress={() => languageSwitch('en')} />
+                    <Button text={txt} onPress={() => this.switchLanguage()} />
                     <Switch value={isSwitchOn} onValueChange={() =>{ this.setState({ isSwitchOn: !isSwitchOn }); }} />
                     <Divider style={styles.divider} />
                     <Button onPress={() => this.props.navigation.navigate('ExamSettings')} text='Экзамен' />
@@ -142,6 +149,15 @@ export default class TrainingScreen extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    console.log("New state " + state.language)
+    return {
+        language: state.language
+    }
+}
+
+export default connect(mapStateToProps)(TrainingScreen)
 
 const styles = StyleSheet.create({
     questionNumber: {
