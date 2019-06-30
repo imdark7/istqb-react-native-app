@@ -7,9 +7,11 @@ import QuestionNumber from '../components/QuestionNumber';
 import { Appbar, Switch, Divider } from 'react-native-paper';
 import InfoBar from '../components/InfoBar';
 import SideMenu from '../components/SideMenu';
-import Button from '../components/Button';
+import SwitchButton from '../components/SwitchButton';
+import Delimiter from '../components/Delimiter'
 import store from '../redux/store';
 import Language from '../const/Language'
+import Order from '../const/Order'
 import {setLanguage, setTheme, setOrder} from '../redux/actions/trainingSettings'
 
 class TrainingScreen extends Component {
@@ -84,12 +86,13 @@ class TrainingScreen extends Component {
     state = { 
         questionData: this.getQuestionInfo(),
         sideMenuIsOpen: false,
-        isSwitchOn: false,
-        language: Language.RU
+        language: Language.RU,
+        order: Order.Shuffle
     }
 
     componentWillReceiveProps(props) {
         this.setState({language: props.language})
+        this.setState({order: props.order})
     }
 
     toggleSideMenu = (state) => {
@@ -112,18 +115,60 @@ class TrainingScreen extends Component {
     switchLanguage = _ => {
         let lng = store.getState().language === Language.RU ? Language.EN : Language.RU
         setLanguage(lng);
-        console.log(store.getState().language)
+    }
+
+    switchOrder = _ => {
+        let order = store.getState().order === Order.Straight ? Order.Shuffle : Order.Straight
+        setOrder(order)
     }
 
     getSideMenu() {
-        const { isSwitchOn } = this.state;
-        const txt = this.state.language === Language.RU ? 'Русский': 'Английский';
+        const language = this.state.language === Language.RU ? 'Русский': 'Английский';
+        const order = this.state.order === Order.Straight ? 'Вопросы по порядку': 'Случайные вопросы';
 
         return  <View>
-                    <Button text={txt} onPress={() => this.switchLanguage()} />
-                    <Switch value={isSwitchOn} onValueChange={() =>{ this.setState({ isSwitchOn: !isSwitchOn }); }} />
-                    <Divider style={styles.divider} />
-                    <Button onPress={() => this.props.navigation.navigate('ExamSettings')} text='Экзамен' />
+                    <Delimiter text='Настройки тренировки' />
+                    <SwitchButton text={language} onPress={this.switchLanguage} />
+                    <SwitchButton text={order} onPress={this.switchOrder} />
+                    <Delimiter text='Темы' />
+                    <SwitchButton
+                        text={'Основы тестирования'}
+                        onPress={() => {}}
+                        changeBackgroundOnClick={true}
+                        pressed={true}
+                    />
+                    <SwitchButton
+                        text={'Тестирование в течение жизненного цикла разработки ПО'}
+                        onPress={() => {}}
+                        changeBackgroundOnClick={true}
+                        pressed={true}
+                    />
+                    <SwitchButton
+                        text={'Статические методы тестирования'}
+                        onPress={() => {}}
+                        changeBackgroundOnClick={true}
+                        pressed={true}
+                    />
+                    <SwitchButton
+                        text={'Методы проектирования тестов'}
+                        onPress={() => {}}
+                        changeBackgroundOnClick={true}
+                        pressed={true}
+                    />
+                    <SwitchButton
+                        text={'Управление тестированием'} 
+                        onPress={() => {}}
+                        changeBackgroundOnClick={true}
+                        pressed={true}
+                    />
+                    <SwitchButton
+                        text={'Инструменты тестирования'}
+                        onPress={() => {}}
+                        changeBackgroundOnClick={true}
+                        pressed={true}
+                    />
+                    <Delimiter text='Навигация' />
+                    <SwitchButton onPress={() => this.props.navigation.navigate('ExamSettings')} text='Экзамен' />
                 </View>
     }
 
@@ -151,9 +196,9 @@ class TrainingScreen extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log("New state " + state.language)
     return {
-        language: state.language
+        language: state.language,
+        order: state.order
     }
 }
 
@@ -163,8 +208,5 @@ const styles = StyleSheet.create({
     questionNumber: {
         color: '#fff',
         margin: 5
-    },
-    divider: {
-        margin: 5,
     }
 })

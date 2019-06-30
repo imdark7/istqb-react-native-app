@@ -2,7 +2,7 @@ import { SET_LANGUAGE, SET_ORDER, SET_THEME } from '../actions/actions'
 
 const initialState = {
     language: 'ru',
-    order: 'shuffle',
+    order: 'Shuffle',
     themes: [
         { name: 'Foundation', selected: true },
         { name: 'Second Theme', selected: true }

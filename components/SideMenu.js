@@ -21,8 +21,8 @@ export default class SideMenu extends Component {
                 content={this.props.sideMenuContent}
                 open={this.state.isOpen}
                 type="overlay"
-                panCloseMask={0.2}
-                openDrawerOffset={0.2}
+                panCloseMask={0.1}
+                openDrawerOffset={0.1}
                 styles={{ drawer: styles.sideMenu }}
                 onCloseStart={() => this.props.toggleSideMenuHandler(false)}
                 onOpenStart={() => this.props.toggleSideMenuHandler(true)}
@@ -37,7 +37,7 @@ export default class SideMenu extends Component {
 const styles = StyleSheet.create({
     sideMenu: {
         backgroundColor: '#fff',
-        padding: 20,
+        padding: 10,
         borderRightWidth: 5,
         borderTopRightRadius: 10,
         borderBottomRightRadius: 10,
